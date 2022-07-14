@@ -57,10 +57,15 @@ export default function Details() {
 		if (errors) {
 			alert("oh no");
 		} else {
-			const sum = response.reduce((accumulator, object) => {
-				return accumulator + object.raiting;
-			}, 0);
-			const raiting = sum / response.length;
+			let sum = 0;
+			let raiting = 0;
+			if (response.length > 0) {
+				sum = response.reduce((accumulator, object) => {
+					return accumulator + object.raiting;
+				}, 0);
+				raiting = sum / response.length;
+			}
+
 			setUser((cur) => {
 				return {
 					...cur,
