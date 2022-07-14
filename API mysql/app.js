@@ -1,5 +1,6 @@
 const express = require("express");
 const logger = require("morgan");
+const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 require("./dbConnection/bd");
 // This will be our application entry. We'll setup our server here.
@@ -12,6 +13,19 @@ app.use(logger("dev"));
 // app.use(bodyParser.json());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+const connection = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "1234",
+});
+
+connection.query(
+	`CREATE DATABASE IF NOT EXISTS petsitter`,
+	function (err, results) {
+		console.log(results);
+		console.log(err);
+	}
+);
 
 app.use(function (req, res, next) {
 	// Métodos que se van a permitir
